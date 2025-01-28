@@ -2,14 +2,15 @@ import { useState } from "react"
 import { Trash, Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
 import {ItemModel} from "../models/ItemModel.ts";
-import {addItem} from "../reducers/ItemSlice.ts";
+import {addItem, saveItem} from "../reducers/ItemSlice.ts";
+import {AppDispatch} from "../store/Store.ts";
 
 function Item() {
   /*const [items, setItems] = useState([
     { item_id: "I001", name: "Arduino Board", quantity: 10, price: 20.5 },
     { item_id: "I002", name: "Raspberry Pi", quantity: 5, price: 35.0 }
   ])*/
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const items = useSelector(state => state.items);
 
   const [itemId, setItemId] = useState("")
@@ -33,7 +34,8 @@ function Item() {
       }
     ])*/
     const newItem = new ItemModel(name,quantity,price);
-    dispatch(addItem(newItem));
+    //dispatch(addItem(newItem));
+    dispatch(saveItem(newItem));
     resetForm()
   }
 
