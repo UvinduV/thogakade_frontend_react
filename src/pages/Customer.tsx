@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   addCustomer,
   deleteCustomer,
+  deletedCustomer,
   getCustomers,
   saveCustomer,
   updateCustomer,
@@ -87,7 +88,8 @@ function Customer() {
   const handleDelete = (customerEmail: string) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       // setCustomers(customers.filter((customer) => customer.id !== customerId))
-      dispatch(deleteCustomer(customerEmail));
+      //dispatch(deleteCustomer(customerEmail));
+      dispatch(deletedCustomer(customerEmail));
     }
   }
 

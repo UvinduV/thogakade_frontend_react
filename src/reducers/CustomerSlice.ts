@@ -23,7 +23,7 @@ export const updatedCustomer = createAsyncThunk(
     'customer/updateCustomer',
     async ({ email, customer }: { email: string; customer: CustomerModel }) => {
         try {
-            const response = await api.put(`/update/${email}`, customer);
+            const response = await api.put('/update/${email}', customer);
             return response.data;
         } catch (error) {
             return console.log('error', error);
@@ -38,8 +38,18 @@ export const getCustomers = createAsyncThunk(
             const response = await api.get('/Customer/view');
             return response.data;
         } catch (error) {
-            console.log('error', error);
-            throw error;
+            return console.log('error', error);
+        }
+    }
+);
+export const deletedCustomer = createAsyncThunk(
+    'customer/deleteCustomer',
+    async (email: string) => {
+        try {
+            const response = await api.delete('/delete/${email}');
+            return response.data;
+        } catch (error) {
+            return console.log('error', error);
         }
     }
 );
@@ -93,12 +103,21 @@ const CustomerSlice = createSlice({
                 return action.payload;
             })
             .addCase(getCustomers.rejected, (state, action) => {
-                console.error("Failed to load customers:", action.error.message);
+                console.error("Failed to load customers:", action.payload);
             })
             .addCase(getCustomers.pending, (state, action) => {
                 console.error("Pending");
-            });
+            })
 
+            .addCase(deletedCustomer.fulfilled, (state, action) => {
+                return state.filter(customer => customer.email !== action.payload);
+            })
+            .addCase(deletedCustomer.rejected, (state, action) => {
+                console.error("Failed to delete customer:", action.payload);
+            })
+            .addCase(deletedCustomer.pending, (state, action) => {
+                console.error("Pending");
+            });
 
 
     }
