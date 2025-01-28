@@ -50,18 +50,18 @@ function Item() {
       alert("All fields are required!")
       return
     }
-    setItems(
-      items.map((item) =>
-        item.item_id === itemId
-          ? {
-              item_id: itemId,
-              name,
-              quantity: parseInt(quantity),
-              price: parseFloat(price)
-            }
-          : item
-      )
-    )
+    // setItems(
+    //   items.map((item) =>
+    //     item.item_id === itemId
+    //       ? {
+    //           item_id: itemId,
+    //           name,
+    //           quantity: parseInt(quantity),
+    //           price: parseFloat(price)
+    //         }
+    //       : item
+    //   )
+    // )
     resetForm()
   }
 
