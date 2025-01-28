@@ -1,8 +1,7 @@
 import {ItemModel} from "../models/ItemModel.ts";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import {CustomerModel} from "../models/CustomerModel.ts";
-import {deletedCustomer, getCustomers, saveCustomer, updatedCustomer} from "./CustomerSlice.ts";
+import {getCustomers} from "./CustomerSlice.ts";
 
 const initialState : ItemModel[]=[]
 
@@ -21,6 +20,17 @@ export const saveItem = createAsyncThunk(
         }
     }
 );
+export const getItems = createAsyncThunk(
+    'item/getItems',
+    async () => {
+        try {
+            const response = await api.get('/Item/view');
+            return response.data;
+        } catch (error) {
+            return console.log('error', error);
+        }
+    }
+);
 
 const ItemSlice = createSlice({
     name:"item",
@@ -36,9 +46,19 @@ const ItemSlice = createSlice({
                 state.push(action.payload);
             })
             .addCase(saveItem.rejected, (state, action) => {
-                console.error("Failed to save customer:", action.payload);
+                console.error("Failed to save Item:", action.payload);
             })
             .addCase(saveItem.pending, (state, action) => {
+                console.error("Pending");
+            })
+
+            .addCase(getItems.fulfilled, (state, action) => {
+                return action.payload;
+            })
+            .addCase(getItems.rejected, (state, action) => {
+                console.error("Failed to load items:", action.payload);
+            })
+            .addCase(getItems.pending, (state, action) => {
                 console.error("Pending");
             });
 

@@ -1,9 +1,10 @@
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import { Trash, Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
 import {ItemModel} from "../models/ItemModel.ts";
-import {addItem, saveItem} from "../reducers/ItemSlice.ts";
+import {addItem, getItems, saveItem} from "../reducers/ItemSlice.ts";
 import {AppDispatch} from "../store/Store.ts";
+import {getCustomers} from "../reducers/CustomerSlice.ts";
 
 function Item() {
   /*const [items, setItems] = useState([
@@ -12,6 +13,10 @@ function Item() {
   ])*/
   const dispatch = useDispatch<AppDispatch>();
   const items = useSelector(state => state.items);
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
 
   const [itemId, setItemId] = useState("")
   const [name, setName] = useState("")
