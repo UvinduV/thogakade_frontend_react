@@ -1,23 +1,28 @@
 import React, { useState } from "react"
 import { Trash2 } from "react-feather"
+import {useDispatch, useSelector} from "react-redux";
+import {addCustomer} from "../reducers/CustomerSlice.ts";
+import {CustomerModel} from "../models/CustomerModel.ts";
 
 function Customer() {
-  const [customers, setCustomers] = useState([
-    {
-      id: "C001",
-      name: "John Doe",
-      nic: "123456789V",
-      email: "john@example.com",
-      phone: "1234567890"
-    },
-    {
-      id: "C002",
-      name: "Jane Smith",
-      nic: "987654321X",
-      email: "jane@example.com",
-      phone: "0987654321"
-    }
-  ])
+  // const [customers, setCustomers] = useState([
+  //   {
+  //     id: "C001",
+  //     name: "John Doe",
+  //     nic: "123456789V",
+  //     email: "john@example.com",
+  //     phone: "1234567890"
+  //   },
+  //   {
+  //     id: "C002",
+  //     name: "Jane Smith",
+  //     nic: "987654321X",
+  //     email: "jane@example.com",
+  //     phone: "0987654321"
+  //   }
+  // ])
+  const dispatch = useDispatch();
+  const customers = useSelector(state => state.customers);
 
   const [id, setId] = useState("")
   const [name, setName] = useState("")
@@ -27,12 +32,15 @@ function Customer() {
   const [isEditing, setIsEditing] = useState(false)
 
   const handleAdd = () => {
-    if (!id || !name || !nic || !email || !phone) {
+    if (!name || !nic || !email || !phone) {
       alert("All fields are required!")
       return
     }
-    setCustomers([...customers, { id, name, nic, email, phone }])
-    resetForm()
+    // setCustomers([...customers, { id, name, nic, email, phone }])
+    // resetForm()
+    const newCustomer = new CustomerModel(name, nic, email, phone);
+    dispatch(addCustomer(newCustomer));
+
   }
 
   const handleEdit = (customer: any) => {
@@ -49,17 +57,17 @@ function Customer() {
       alert("All fields are required!")
       return
     }
-    setCustomers(
-      customers.map((customer) =>
-        customer.id === id ? { id, name, nic, email, phone } : customer
-      )
-    )
+    // setCustomers(
+    //   customers.map((customer) =>
+    //     customer.id === id ? { id, name, nic, email, phone } : customer
+    //   )
+    // )
     resetForm()
   }
 
   const handleDelete = (customerId: string) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
-      setCustomers(customers.filter((customer) => customer.id !== customerId))
+      // setCustomers(customers.filter((customer) => customer.id !== customerId))
     }
   }
 
@@ -153,9 +161,9 @@ function Customer() {
           </tr>
         </thead>
         <tbody>
-          {customers.map((customer) => (
+          {customers.map((customer: CustomerModel) => (
             <tr
-              key={customer.id}
+              key={customer.email}
               onClick={() => handleEdit(customer)}
               className="hover:cursor-pointer hover:bg-slate-600 hover:text-white"
             >
@@ -166,7 +174,7 @@ function Customer() {
               <td className="border px-4 py-2">{customer.phone}</td>
               <td className="border px-4 py-2 text-center">
                 <button
-                  onClick={() => handleDelete(customer.id)}
+                  onClick={() => handleDelete(customer.email)}
                   className="bg-red-500 text-white p-2 rounded-lg"
                 >
                   <Trash2 />
