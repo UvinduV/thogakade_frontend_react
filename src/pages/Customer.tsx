@@ -1,7 +1,14 @@
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import { Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
-import {addCustomer, deleteCustomer, saveCustomer, updateCustomer, updatedCustomer} from "../reducers/CustomerSlice.ts";
+import {
+  addCustomer,
+  deleteCustomer,
+  getCustomers,
+  saveCustomer,
+  updateCustomer,
+  updatedCustomer
+} from "../reducers/CustomerSlice.ts";
 import {CustomerModel} from "../models/CustomerModel.ts";
 import {AppDispatch} from "../store/Store.ts";
 
@@ -24,6 +31,10 @@ function Customer() {
   // ])
   const dispatch = useDispatch<AppDispatch>();
   const customers = useSelector(state => state.customers);
+
+  useEffect(() => {
+    dispatch(getCustomers());
+    }, [dispatch]);
 
   const [id, setId] = useState("")
   const [name, setName] = useState("")

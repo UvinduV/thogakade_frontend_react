@@ -31,6 +31,19 @@ export const updatedCustomer = createAsyncThunk(
         }
     }
 );
+export const getCustomers = createAsyncThunk(
+    'customer/getCustomers',
+    async () => {
+        try {
+            const response = await api.get('/Customer/view');
+            return response.data;
+        } catch (error) {
+            console.log('error', error);
+            throw error;
+        }
+    }
+);
+
 
 const CustomerSlice = createSlice({
     name:"customer",
@@ -64,12 +77,25 @@ const CustomerSlice = createSlice({
             })
 
             .addCase(updatedCustomer.fulfilled, (state, action) => {
-                state.push(action.payload);
+                const index = state.findIndex(c => c.email === action.payload.email);
+                if (index >= 0) {
+                    state[index] = action.payload;
+                }
             })
             .addCase(updatedCustomer.rejected, (state, action) => {
                 console.error("Failed to update customer:", action.payload);
             })
             .addCase(updatedCustomer.pending, (state, action) => {
+                console.error("Pending");
+            })
+
+            .addCase(getCustomers.fulfilled, (state, action) => {
+                return action.payload;
+            })
+            .addCase(getCustomers.rejected, (state, action) => {
+                console.error("Failed to load customers:", action.error.message);
+            })
+            .addCase(getCustomers.pending, (state, action) => {
                 console.error("Pending");
             });
 
