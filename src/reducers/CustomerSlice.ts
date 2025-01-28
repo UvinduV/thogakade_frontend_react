@@ -15,7 +15,19 @@ export const saveCustomer = createAsyncThunk(
             const response = await api.post('/Customer/add', customer);
             return response.data;
         } catch (error) {
-            return console.log('error',error)
+            return console.log('error',error);
+        }
+    }
+);
+export const updatedCustomer = createAsyncThunk(
+    'customer/updateCustomer',
+    async ({ email, customer }: { email: string; customer: CustomerModel }) => {
+        try {
+            const response = await api.put(`/update/${email}`, customer);
+            return response.data;
+        } catch (error) {
+            return console.log('error', error);
+
         }
     }
 );
@@ -49,7 +61,18 @@ const CustomerSlice = createSlice({
             })
             .addCase(saveCustomer.pending, (state, action) => {
                 console.error("Pending");
+            })
+
+            .addCase(updatedCustomer.fulfilled, (state, action) => {
+                state.push(action.payload);
+            })
+            .addCase(updatedCustomer.rejected, (state, action) => {
+                console.error("Failed to update customer:", action.payload);
+            })
+            .addCase(updatedCustomer.pending, (state, action) => {
+                console.error("Pending");
             });
+
 
 
     }

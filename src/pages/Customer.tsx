@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
-import {addCustomer, deleteCustomer, saveCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
+import {addCustomer, deleteCustomer, saveCustomer, updateCustomer, updatedCustomer} from "../reducers/CustomerSlice.ts";
 import {CustomerModel} from "../models/CustomerModel.ts";
 import {AppDispatch} from "../store/Store.ts";
 
@@ -62,7 +62,8 @@ function Customer() {
       return
     }
     const updateCust = new CustomerModel(name, nic, email, phone);
-    dispatch(updateCustomer(updateCust));
+    //dispatch(updateCustomer(updateCust));
+    dispatch(updatedCustomer(email,updateCust));
     alert("Successfully Updated");
     // setCustomers(
     //   customers.map((customer) =>
