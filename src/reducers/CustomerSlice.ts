@@ -23,7 +23,7 @@ export const updatedCustomer = createAsyncThunk(
     'customer/updateCustomer',
     async ({ email, customer }: { email: string; customer: CustomerModel }) => {
         try {
-            const response = await api.put('/update/${email}', customer);
+            const response = await api.put(`/Customer/update/${email}`, customer);
             return response.data;
         } catch (error) {
             return console.log('error', error);
@@ -46,7 +46,7 @@ export const deletedCustomer = createAsyncThunk(
     'customer/deleteCustomer',
     async (email: string) => {
         try {
-            const response = await api.delete('/delete/${email}');
+            const response = await api.delete(`/Customer/delete/${email}`);
             return response.data;
         } catch (error) {
             return console.log('error', error);
