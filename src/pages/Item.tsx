@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Trash, Trash2 } from "react-feather"
 
 function Item() {

@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
-import {addCustomer, deleteCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
+import {addCustomer, deleteCustomer, saveCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
 import {CustomerModel} from "../models/CustomerModel.ts";
+import {AppDispatch} from "../store/Store.ts";
 
 function Customer() {
   // const [customers, setCustomers] = useState([
@@ -21,7 +22,7 @@ function Customer() {
   //     phone: "0987654321"
   //   }
   // ])
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const customers = useSelector(state => state.customers);
 
   const [id, setId] = useState("")
@@ -38,7 +39,8 @@ function Customer() {
     }
     // setCustomers([...customers, { id, name, nic, email, phone }])
     const newCustomer = new CustomerModel(name, nic, email, phone);
-    dispatch(addCustomer(newCustomer));
+    // dispatch(addCustomer(newCustomer));
+    dispatch(saveCustomer(newCustomer));
     alert("customer added successfully!")
 
     resetForm();

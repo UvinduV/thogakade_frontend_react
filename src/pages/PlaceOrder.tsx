@@ -1,6 +1,19 @@
+import {useDispatch, useSelector} from "react-redux";
+import {CustomerModel} from "../models/CustomerModel.ts";
 
 function PlaceOrder() {
-  return <div>PlaceOrder</div>
+
+  const dispatch = useDispatch();
+  const customers = useSelector(state => state.customers);
+  return (
+      <div>
+          PlaceOrder
+        {customers.map((customer: CustomerModel) => (<div key={customer.email}>{customer.name + ' '+ customer.nic + ' '+ customer.email+ ' '+customer.phone }</div>))}
+
+      </div>
+  )
+
+
 }
 
 export default PlaceOrder
