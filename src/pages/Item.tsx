@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Trash, Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
+import {ItemModel} from "../models/ItemModel.ts";
+import {addItem} from "../reducers/ItemSlice.ts";
 
 function Item() {
   /*const [items, setItems] = useState([
@@ -30,6 +32,8 @@ function Item() {
         price: parseFloat(price)
       }
     ])*/
+    const newItem = new ItemModel(name,quantity,price);
+    dispatch(addItem(newItem));
     resetForm()
   }
 
@@ -148,21 +152,21 @@ function Item() {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
+          {items.map((item: ItemModel) => (
             <tr
-              key={item.item_id}
+              key={item.name}
               onClick={() => handleEdit(item)}
               className="hover:cursor-pointer hover:bg-slate-600 hover:text-white"
             >
               <td className="border px-4 py-2">{item.item_id}</td>
               <td className="border px-4 py-2">{item.name}</td>
               <td className="border px-4 py-2">{item.quantity}</td>
-              <td className="border px-4 py-2">{item.price.toFixed(2)}</td>
+              <td className="border px-4 py-2">{item.price}</td>
               <td className="border px-4 py-2 text-center">
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
-                    handleDelete(item.item_id)
+                    handleDelete(item.name)
                   }}
                   className="bg-red-500 text-white p-2 rounded-lg"
                 >

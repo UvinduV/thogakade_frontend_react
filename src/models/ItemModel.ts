@@ -1,11 +1,11 @@
 export class ItemModel {
     name: string;
-    Quantity: number;
+    quantity: number;
     price: number;
 
     constructor(name: string, quantity: number, price: number) {
         this.name = name;
-        this.Quantity = quantity;
+        this.quantity = quantity;
         this.price = price;
     }
 }
