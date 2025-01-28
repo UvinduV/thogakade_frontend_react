@@ -1,11 +1,14 @@
 import { useState } from "react"
 import { Trash, Trash2 } from "react-feather"
+import {useDispatch, useSelector} from "react-redux";
 
 function Item() {
-  const [items, setItems] = useState([
+  /*const [items, setItems] = useState([
     { item_id: "I001", name: "Arduino Board", quantity: 10, price: 20.5 },
     { item_id: "I002", name: "Raspberry Pi", quantity: 5, price: 35.0 }
-  ])
+  ])*/
+  const dispatch = useDispatch();
+  const items = useSelector(state => state.items);
 
   const [itemId, setItemId] = useState("")
   const [name, setName] = useState("")
@@ -18,7 +21,7 @@ function Item() {
       alert("All fields are required!")
       return
     }
-    setItems([
+    /*setItems([
       ...items,
       {
         item_id: itemId,
@@ -26,7 +29,7 @@ function Item() {
         quantity: parseInt(quantity),
         price: parseFloat(price)
       }
-    ])
+    ])*/
     resetForm()
   }
 
@@ -60,7 +63,7 @@ function Item() {
 
   const handleDelete = (itemId: string) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      setItems(items.filter((item) => item.item_id !== itemId))
+      // setItems(items.filter((item) => item.item_id !== itemId))
     }
   }
 
