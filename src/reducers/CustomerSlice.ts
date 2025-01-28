@@ -15,9 +15,12 @@ const CustomerSlice = createSlice({
                     ? new CustomerModel(action.payload.name, action.payload.nic, action.payload.email, action.payload.phone)
                     : customer
             );
-        }
+        },
+        deleteCustomer: (state, action) => {
+            return state.filter(customer => customer.email !== action.payload);
+        },
     }
 
 })
-export const {addCustomer,updateCustomer} = CustomerSlice.actions;
+export const {addCustomer,updateCustomer,deleteCustomer} = CustomerSlice.actions;
 export default CustomerSlice.reducer;

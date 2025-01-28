@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
-import {addCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
+import {addCustomer, deleteCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
 import {CustomerModel} from "../models/CustomerModel.ts";
 
 function Customer() {
@@ -73,6 +73,7 @@ function Customer() {
   const handleDelete = (customerEmail: string) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       // setCustomers(customers.filter((customer) => customer.id !== customerId))
+      dispatch(deleteCustomer(customerEmail));
     }
   }
 
