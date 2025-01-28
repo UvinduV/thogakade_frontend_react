@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Trash2 } from "react-feather"
 import {useDispatch, useSelector} from "react-redux";
-import {addCustomer} from "../reducers/CustomerSlice.ts";
+import {addCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
 import {CustomerModel} from "../models/CustomerModel.ts";
 
 function Customer() {
@@ -37,14 +37,16 @@ function Customer() {
       return
     }
     // setCustomers([...customers, { id, name, nic, email, phone }])
-    // resetForm()
     const newCustomer = new CustomerModel(name, nic, email, phone);
     dispatch(addCustomer(newCustomer));
+    alert("customer added successfully!")
+
+    resetForm();
 
   }
 
-  const handleEdit = (customer: any) => {
-    setId(customer.id)
+  const handleEdit = (customer: CustomerModel) => {
+    // setId(customer.id)
     setName(customer.name)
     setNic(customer.nic)
     setEmail(customer.email)
@@ -57,15 +59,18 @@ function Customer() {
       alert("All fields are required!")
       return
     }
+    const updateCust = new CustomerModel(name, nic, email, phone);
+    dispatch(updateCustomer(updateCust));
+    alert("Successfully Updated");
     // setCustomers(
     //   customers.map((customer) =>
     //     customer.id === id ? { id, name, nic, email, phone } : customer
     //   )
     // )
-    resetForm()
+    resetForm();
   }
 
-  const handleDelete = (customerId: string) => {
+  const handleDelete = (customerEmail: string) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       // setCustomers(customers.filter((customer) => customer.id !== customerId))
     }
